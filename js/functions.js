@@ -33,13 +33,10 @@ const getNumber = (testString) => {
   for (let i = 0; i < normalizeString.length; i++) {
     const num = parseInt(normalizeString[i], 10);
     if (!Number.isNaN(num)) {
-      str += num.toString();
+      str += num;
     }
   }
-  if(!str) {
-    return NaN;
-  }
-  return parseInt(str, 10);
+  return str ? parseInt(str, 10) : NaN;
 };
 
 console.log(getNumber('2023 год'));
