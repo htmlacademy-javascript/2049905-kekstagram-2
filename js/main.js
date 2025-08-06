@@ -58,12 +58,12 @@ const createIdGenerator = () => {
   return () => currentId++;
 };
 
-const generateCommentId = createIdGenerator();
 const generatePhotoId = createIdGenerator();
 
 const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
 
 const generateComments = () => {
+  const generateCommentId = createIdGenerator();
   const commentsCount = getRandomInteger(COMMENTS_COUNT.MIN, COMMENTS_COUNT.MAX);
   return Array.from({ length: commentsCount }, () => ({
     id: generateCommentId(),
