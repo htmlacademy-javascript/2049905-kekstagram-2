@@ -53,13 +53,13 @@ const MINUTES = 60;
 const convertHoursToMinutes = (stringTime) => {
   const [timeHours, timeMinutes] = stringTime.split(':').map(Number);
   return timeHours * MINUTES + timeMinutes;
-}
+};
 
 const checkMeetingTime = (startWork, endWork, startMeeting, durationMeeting) => {
   const timesWork = [startWork, endWork, startMeeting];
   const [startWorkMin, endWorkMin, startMeetingMin] = timesWork.map(convertHoursToMinutes);
   return startMeetingMin >= startWorkMin && (startMeetingMin + durationMeeting) <= endWorkMin;
-}
+};
 
 window.console.log(`08:00, 17:30, 14:00, 9 is ${checkMeetingTime('08:00', '17:30', '14:00', 90)}`); //true
 window.console.log(`8:0, 10:0, 8:0, 120 is ${checkMeetingTime('8:0', '10:0', '8:0', 120)}`); //true
