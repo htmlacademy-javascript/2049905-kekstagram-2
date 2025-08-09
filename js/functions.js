@@ -47,3 +47,22 @@
 // window.console.log(getNumber('2023'));
 // window.console.log(getNumber('-1'));
 // window.console.log(getNumber('1.5'));
+
+const MINUTES = 60;
+
+const convertHoursToMinutes = (stringTime) => {
+  const [timeHours, timeMinutes] = stringTime.split(':').map(Number);
+  return timeHours * MINUTES + timeMinutes;
+};
+
+const checkMeetingTime = (startWork, endWork, startMeeting, durationMeeting) => {
+  const timesWork = [startWork, endWork, startMeeting];
+  const [startWorkMin, endWorkMin, startMeetingMin] = timesWork.map(convertHoursToMinutes);
+  return startMeetingMin >= startWorkMin && (startMeetingMin + durationMeeting) <= endWorkMin;
+};
+
+window.console.log(`08:00, 17:30, 14:00, 9 is ${checkMeetingTime('08:00', '17:30', '14:00', 90)}`); //true
+window.console.log(`8:0, 10:0, 8:0, 120 is ${checkMeetingTime('8:0', '10:0', '8:0', 120)}`); //true
+window.console.log(`08:00, 14:30, 14:00, 90 is ${checkMeetingTime('08:00', '14:30', '14:00', 90)}`); //false
+window.console.log(`14:00, 17:30, 08:0, 90 is ${checkMeetingTime('14:00', '17:30', '08:0', 90)}`); //false
+window.console.log(`8:00, 17:30, 08:00, 900 is ${checkMeetingTime('8:00', '17:30', '08:00', 900)}`); //false
