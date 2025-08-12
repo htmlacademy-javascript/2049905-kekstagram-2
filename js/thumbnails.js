@@ -13,6 +13,6 @@ const drawThumbnails = (items) => {
   });
 
   photosContainer.appendChild(photosListFragment);
-}
+};
 
 export { drawThumbnails };
