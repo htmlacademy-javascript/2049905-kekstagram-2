@@ -7,27 +7,26 @@ const commentsCounter = bigPicture.querySelector('.social__comment-count');
 const commentsLoader = bigPicture.querySelector('.comments-loader');
 const pageBody = document.querySelector('body');
 
-const onEscKeyDown = (evt) => {
-  if (isEscapeKey(evt)) {
-    onCloseClick();
-  }
-};
-
-const onOverlayClick = (evt) => {
-  if (evt.target === bigPicture) {
-    onCloseClick();
-  }
-};
-
-const onCloseClick = () => {
+function onCloseClick() {
   bigPicture.classList.add('hidden');
   pageBody.classList.remove('modal-open');
 
   document.removeEventListener('keydown', onEscKeyDown);
   bigPicture.removeEventListener('click', onOverlayClick);
   bigPictureClose.removeEventListener('click', onCloseClick);
-};
+}
 
+function onEscKeyDown(evt) {
+  if (isEscapeKey(evt)) {
+    onCloseClick();
+  }
+}
+
+function onOverlayClick(evt) {
+  if (evt.target === bigPicture) {
+    onCloseClick();
+  }
+}
 
 const createCommentElement = ({ avatar, name, message }) => {
   const commentElement = document.createElement('li');
@@ -61,7 +60,7 @@ const showBigPicture = ({ url, description, likes, comments }) => {
 
   commentsList.innerHTML = '';
 
-  comments.forEach(comment => {
+  comments.forEach((comment) => {
     commentFragment.appendChild(createCommentElement(comment));
   });
 
