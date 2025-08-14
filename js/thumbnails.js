@@ -13,7 +13,7 @@ const drawThumbnails = (items) => {
     photoElement.querySelector('.picture__likes').textContent = likes;
     photosListFragment.appendChild(photoElement);
 
-    photoElement.addEventListener('click', (evt) => {
+    photoElement.addEventListener('click', () => {
       showBigPicture({url, description, likes, comments});
     });
   });
