@@ -11,14 +11,14 @@ const drawThumbnails = (items) => {
     photoElement.querySelector('.picture__img').alt = description;
     photoElement.querySelector('.picture__comments').textContent = comments.length;
     photoElement.querySelector('.picture__likes').textContent = likes;
-    photosListFragment.appendChild(photoElement);
+    photosListFragment.append(photoElement);
 
     photoElement.addEventListener('click', () => {
       showBigPicture({url, description, likes, comments});
     });
   });
 
-  photosContainer.appendChild(photosListFragment);
+  photosContainer.append(photosListFragment);
 };
 
 export { drawThumbnails };
