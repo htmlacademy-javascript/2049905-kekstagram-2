@@ -24,7 +24,7 @@ const closeBigPicture = () => {
 };
 
 function onDocumentEscKeydown(evt) {
-  if (isEscapeKey(evt) && !bigPicture.classList.contains('hidden')) {
+  if (isEscapeKey(evt)) {
     closeBigPicture();
   }
 }

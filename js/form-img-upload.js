@@ -14,11 +14,11 @@ const closeImgUploadOverlay = () => {
   pageBody.classList.remove('modal-open');
   imgUploadForm.reset();
   validatorUploadForm.reset();
+  document.removeEventListener('keydown', onDocumentEscKeydown);
 };
 
 function onDocumentEscKeydown(evt) {
-  if (isEscapeKey(evt) && !imgUploadOverlay.classList.contains('hidden') &&
-    !evt.target.classList.contains('text__hashtags') &&
+  if (isEscapeKey(evt) && !evt.target.classList.contains('text__hashtags') &&
     !evt.target.classList.contains('text__description')) {
     closeImgUploadOverlay();
   }
@@ -31,12 +31,12 @@ function onImgUploadCloserClick() {
 const onImgUploadInputChange = () => {
   imgUploadOverlay.classList.remove('hidden');
   pageBody.classList.add('modal-open');
+  document.addEventListener('keydown', onDocumentEscKeydown);
 };
 
 const changeImgUploadForm = () => {
   imgUploadInput.addEventListener('change', onImgUploadInputChange);
   imgUploadCloser.addEventListener('click', onImgUploadCloserClick);
-  document.addEventListener('keydown', onDocumentEscKeydown);
 };
 
 export { changeImgUploadForm };
