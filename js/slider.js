@@ -47,7 +47,7 @@ const imgUploadForm = document.querySelector('.img-upload__form');
 const effectContainer = imgUploadForm.querySelector('.img-upload__effect-level');
 const effectValueInput = effectContainer.querySelector('.effect-level__value');
 const effectSlider = effectContainer.querySelector('.effect-level__slider');
-const previewPhoto = imgUploadForm.querySelector('.img-upload__preview > img');
+const previewPhoto = imgUploadForm.querySelector('.img-upload__preview img');
 
 noUiSlider.create(effectSlider, {
   start: 100,
@@ -80,7 +80,6 @@ const setupSlider = () => {
     if (currentEffect === 'none') {
       effectContainer.classList.add('hidden');
       previewPhoto.style.filter = '';
-      effectValueInput.value = 100;
     } else {
       effectContainer.classList.remove('hidden');
       const settings = EffectValue[currentEffect];
@@ -93,8 +92,6 @@ const setupSlider = () => {
         },
         step: settings.step
       });
-
-      effectSlider.noUiSlider.set(settings.start);
     }
   });
 };
