@@ -73,7 +73,7 @@ effectSlider.noUiSlider.on('update', () => {
   }
 });
 
-const setupSlider = () => {
+const configureSlider = () => {
   imgUploadForm.addEventListener('change', () => {
     currentEffect = imgUploadForm.effect.value;
 
@@ -96,4 +96,4 @@ const setupSlider = () => {
   });
 };
 
-export { setupSlider };
+export { configureSlider };

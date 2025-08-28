@@ -1,6 +1,6 @@
 import { isEscapeKey } from './util.js';
 import { validateImgUploadForm } from './validator.js';
-import { setupSlider } from './slider.js';
+import { configureSlider } from './slider.js';
 
 const ScaleValue = {
   default: 100,
@@ -76,7 +76,7 @@ const changeImgUploadForm = () => {
   imgUploadCloser.addEventListener('click', onImgUploadCloserClick);
   btnBiggerImg.addEventListener('click', onBtnBiggerImgClick);
   btnSmallerImg.addEventListener('click', onBtnSmallerImgClick);
-  setupSlider();
+  configureSlider();
 };
 
 export { changeImgUploadForm };
