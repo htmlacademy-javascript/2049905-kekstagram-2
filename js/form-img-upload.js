@@ -76,6 +76,14 @@ const changeImgUploadForm = () => {
   imgUploadCloser.addEventListener('click', onImgUploadCloserClick);
   btnBiggerImg.addEventListener('click', onBtnBiggerImgClick);
   btnSmallerImg.addEventListener('click', onBtnSmallerImgClick);
+
+  imgUploadForm.addEventListener('submit', (evt) => {
+
+    if (!validatorUploadForm.validate()) {
+      evt.preventDefault();
+    }
+
+  });
   configureSlider();
 };
 

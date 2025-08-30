@@ -1,10 +1,15 @@
-import './util.js';
-import { photos } from './data.js';
+import { showAlert } from './util.js';
 import { drawThumbnails } from './thumbnails.js';
 import { changeImgUploadForm } from './form-img-upload.js';
+import { getData } from './api.js';
 
-window.console.log(photos);
-
-drawThumbnails(photos);
+getData()
+  .then((photos) => {
+    drawThumbnails(photos);
+  })
+  .catch(() => {
+    showAlert();
+  }
+  );
 
 changeImgUploadForm();
