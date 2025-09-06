@@ -71,13 +71,12 @@ const validateImgUploadForm = (imgUploadForm) => {
     (value) => validateHashtags(value).error);
   pristine.addValidator(commentInput, validateComment, ErrorMessage.tooLongComment);
 
-  const onImgUploadFormSubmit = (evt) => {
-    if (!pristine.validate()) {
-      evt.preventDefault();
-    }
-  };
+  //const onImgUploadFormSubmit = (evt) => {
+  // if (!pristine.validate()) {
+  //   evt.preventDefault();
+  //  }
+  //  };
 
-  imgUploadForm.addEventListener('submit', onImgUploadFormSubmit);
 
   return pristine;
 };

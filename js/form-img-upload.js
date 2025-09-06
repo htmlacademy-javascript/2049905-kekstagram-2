@@ -1,6 +1,8 @@
 import { isEscapeKey } from './util.js';
 import { validateImgUploadForm } from './validator.js';
 import { configureSlider } from './slider.js';
+import { sendData } from './api.js';
+import { showSuccessMessage, showErrorMessage } from './notifications.js';
 
 const ScaleValue = {
   default: 100,
@@ -17,11 +19,13 @@ const imgPreview = document.querySelector('.img-upload__preview img');
 const scaleValueInput = document.querySelector('.scale__control--value');
 const btnSmallerImg = document.querySelector('.scale__control--smaller');
 const btnBiggerImg = document.querySelector('.scale__control--bigger');
+const btnSubmit = document.querySelector('.img-upload__submit');
 const pageBody = document.querySelector('body');
 
 const validatorUploadForm = validateImgUploadForm(imgUploadForm);
 
 let currentScale = ScaleValue.default;
+let isSubmitting = false;
 
 const updateScale = (value) => {
   currentScale = value;
@@ -58,7 +62,8 @@ const closeImgUploadOverlay = () => {
 
 function onDocumentEscKeydown(evt) {
   if (isEscapeKey(evt) && !evt.target.classList.contains('text__hashtags') &&
-    !evt.target.classList.contains('text__description')) {
+    !evt.target.classList.contains('text__description') &&
+    !document.querySelector('.error__inner') && !isSubmitting) {
     closeImgUploadOverlay();
   }
 }
@@ -68,15 +73,40 @@ const onImgUploadInputChange = () => {
 };
 
 const onImgUploadCloserClick = () => {
-  closeImgUploadOverlay();
+  if (!isSubmitting) {
+    closeImgUploadOverlay();
+  }
 };
 
-const changeImgUploadForm = () => {
+const openImgUploadForm = () => {
   imgUploadInput.addEventListener('change', onImgUploadInputChange);
   imgUploadCloser.addEventListener('click', onImgUploadCloserClick);
   btnBiggerImg.addEventListener('click', onBtnBiggerImgClick);
   btnSmallerImg.addEventListener('click', onBtnSmallerImgClick);
+
+  imgUploadForm.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+
+    if (validatorUploadForm.validate()) {
+      btnSubmit.disabled = true;
+      isSubmitting = true;
+
+      const formData = new FormData(evt.target);
+
+      sendData(formData)
+        .then(() => {
+          closeImgUploadOverlay();
+          showSuccessMessage();
+        })
+        .catch(() => showErrorMessage())
+        .finally(() => {
+          btnSubmit.disabled = false;
+          isSubmitting = false;
+        });
+    }
+  });
+
   configureSlider();
 };
 
-export { changeImgUploadForm };
+export { openImgUploadForm };
