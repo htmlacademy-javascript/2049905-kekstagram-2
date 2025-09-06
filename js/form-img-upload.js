@@ -62,7 +62,7 @@ const closeImgUploadOverlay = () => {
 function onDocumentEscKeydown(evt) {
   if (isEscapeKey(evt) && !evt.target.classList.contains('text__hashtags') &&
     !evt.target.classList.contains('text__description') &&
-      !isSubmitting) {
+    !document.querySelector('.error__inner') && !isSubmitting) {
     closeImgUploadOverlay();
   }
 }
