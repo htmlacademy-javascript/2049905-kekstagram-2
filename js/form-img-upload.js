@@ -24,6 +24,7 @@ const pageBody = document.querySelector('body');
 const validatorUploadForm = validateImgUploadForm(imgUploadForm);
 
 let currentScale = ScaleValue.default;
+let isSubmitting = false;
 
 const updateScale = (value) => {
   currentScale = value;
@@ -60,7 +61,8 @@ const closeImgUploadOverlay = () => {
 
 function onDocumentEscKeydown(evt) {
   if (isEscapeKey(evt) && !evt.target.classList.contains('text__hashtags') &&
-    !evt.target.classList.contains('text__description')) {
+    !evt.target.classList.contains('text__description') &&
+      !isSubmitting) {
     closeImgUploadOverlay();
   }
 }
@@ -70,7 +72,9 @@ const onImgUploadInputChange = () => {
 };
 
 const onImgUploadCloserClick = () => {
-  closeImgUploadOverlay();
+  if (!isSubmitting) {
+    closeImgUploadOverlay();
+  }
 };
 
 const openImgUploadForm = () => {
@@ -81,9 +85,13 @@ const openImgUploadForm = () => {
 
   imgUploadForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
-    btnSubmit.disabled = true;
+
     if (validatorUploadForm.validate()) {
+      btnSubmit.disabled = true;
+      isSubmitting = true;
+
       const formData = new FormData(evt.target);
+
       sendData(formData)
         .then(() => {
           closeImgUploadOverlay();
@@ -92,9 +100,11 @@ const openImgUploadForm = () => {
         .catch(() => showErrorMessage())
         .finally(() => {
           btnSubmit.disabled = false;
+          isSubmitting = false;
         });
     }
   });
+
   configureSlider();
 };
 
