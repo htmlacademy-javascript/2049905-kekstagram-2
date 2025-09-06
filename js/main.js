@@ -1,6 +1,6 @@
-import { showAlert } from './util.js';
+import { showDataErrorMessage } from './util.js';
 import { drawThumbnails } from './thumbnails.js';
-import { changeImgUploadForm } from './form-img-upload.js';
+import { openImgUploadForm } from './form-img-upload.js';
 import { getData } from './api.js';
 
 getData()
@@ -8,8 +8,8 @@ getData()
     drawThumbnails(photos);
   })
   .catch(() => {
-    showAlert();
+    showDataErrorMessage();
   }
   );
 
-changeImgUploadForm();
+openImgUploadForm();

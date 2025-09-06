@@ -1,6 +1,7 @@
-import { isEscapeKey } from './util.js';
+import { isEscapeKey, showSuccessMessage, showErrorMessage } from './util.js';
 import { validateImgUploadForm } from './validator.js';
 import { configureSlider } from './slider.js';
+import { sendData } from './api.js';
 
 const ScaleValue = {
   default: 100,
@@ -17,6 +18,7 @@ const imgPreview = document.querySelector('.img-upload__preview img');
 const scaleValueInput = document.querySelector('.scale__control--value');
 const btnSmallerImg = document.querySelector('.scale__control--smaller');
 const btnBiggerImg = document.querySelector('.scale__control--bigger');
+const btnSubmit = document.querySelector('.img-upload__submit');
 const pageBody = document.querySelector('body');
 
 const validatorUploadForm = validateImgUploadForm(imgUploadForm);
@@ -71,20 +73,29 @@ const onImgUploadCloserClick = () => {
   closeImgUploadOverlay();
 };
 
-const changeImgUploadForm = () => {
+const openImgUploadForm = () => {
   imgUploadInput.addEventListener('change', onImgUploadInputChange);
   imgUploadCloser.addEventListener('click', onImgUploadCloserClick);
   btnBiggerImg.addEventListener('click', onBtnBiggerImgClick);
   btnSmallerImg.addEventListener('click', onBtnSmallerImgClick);
 
   imgUploadForm.addEventListener('submit', (evt) => {
-
-    if (!validatorUploadForm.validate()) {
-      evt.preventDefault();
+    evt.preventDefault();
+    btnSubmit.disabled = true;
+    if (validatorUploadForm.validate()) {
+      const formData = new FormData(evt.target);
+      sendData(formData)
+        .then(() => {
+          closeImgUploadOverlay();
+          showSuccessMessage();
+        })
+        .catch(() => showErrorMessage())
+        .finally(() => {
+          btnSubmit.disabled = false;
+        });
     }
-
   });
   configureSlider();
 };
 
-export { changeImgUploadForm };
+export { openImgUploadForm };
