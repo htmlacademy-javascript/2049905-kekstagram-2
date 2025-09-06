@@ -1,7 +1,8 @@
-import { isEscapeKey, showSuccessMessage, showErrorMessage } from './util.js';
+import { isEscapeKey } from './util.js';
 import { validateImgUploadForm } from './validator.js';
 import { configureSlider } from './slider.js';
 import { sendData } from './api.js';
+import { showSuccessMessage, showErrorMessage } from './notifications.js';
 
 const ScaleValue = {
   default: 100,
