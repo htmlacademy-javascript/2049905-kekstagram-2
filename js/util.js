@@ -10,7 +10,7 @@ const showAlert = (template) => {
   const message = template.cloneNode(true);
   document.body.appendChild(message);
 
-  const remove = () => {
+  const removeAlert = () => {
     message.remove();
     document.removeEventListener('keydown', onEscKeydown);
     document.removeEventListener('click', onDocumentClick);
@@ -19,48 +19,44 @@ const showAlert = (template) => {
   function onEscKeydown(evt) {
     if (isEscapeKey(evt)) {
       evt.preventDefault();
-      remove();
+      removeAlert();
     }
   }
 
   function onDocumentClick(evt) {
     if (evt.target === message) {
-      remove();
+      removeAlert();
     }
   }
 
   document.addEventListener('keydown', onEscKeydown);
   document.addEventListener('click', onDocumentClick);
 
-  return { message, remove };
+  return { message, removeAlert };
 };
 
 const showDataErrorMessage = () => {
-  const { remove } = showAlert(templateDataError);
-  setTimeout(remove, ALERT_SHOW_TIME);
+  const { removeAlert } = showAlert(templateDataError);
+  setTimeout(removeAlert, ALERT_SHOW_TIME);
 };
 
 const showErrorMessage = () => {
-  const { message, remove } = showAlert(templateError);
+  const { message, removeAlert } = showAlert(templateError);
   const btnAlertError = message.querySelector('.error__button');
   if (btnAlertError) {
-    const onClick = () => {
-      remove();
-      btnAlertError.removeEventListener('click', onClick);
-    };
-    btnAlertError.addEventListener('click', onClick);
+    btnAlertError.addEventListener('click', () => {
+      removeAlert();
+    });
   }
 };
 
 const showSuccessMessage = () => {
-  const { message, remove } = showAlert(templateSuccess);
+  const { message, removeAlert } = showAlert(templateSuccess);
   const btnAlertSuccess = message.querySelector('.success__button');
   if (btnAlertSuccess) {
-    const onClick = () => {
-      remove();
-      btnAlertSuccess.removeEventListener('click', onClick);
-    };
-    btnAlertSuccess.addEventListener('click', onClick);
+    btnAlertSuccess.addEventListener('click', () => {
+      removeAlert();
+    });
   }
 };
 
