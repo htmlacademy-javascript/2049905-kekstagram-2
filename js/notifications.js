@@ -12,11 +12,11 @@ const showAlert = (template) => {
 
   const removeAlert = () => {
     message.remove();
-    document.removeEventListener('keydown', onEscKeydown);
+    document.removeEventListener('keydown', onDocumentEscKeydown);
     document.removeEventListener('click', onDocumentClick);
   };
 
-  function onEscKeydown(evt) {
+  function onDocumentEscKeydown(evt) {
     if (isEscapeKey(evt)) {
       evt.preventDefault();
       removeAlert();
@@ -29,7 +29,7 @@ const showAlert = (template) => {
     }
   }
 
-  document.addEventListener('keydown', onEscKeydown);
+  document.addEventListener('keydown', onDocumentEscKeydown);
   document.addEventListener('click', onDocumentClick);
 
   return { message, removeAlert };
@@ -44,9 +44,7 @@ const showErrorMessage = () => {
   const { message, removeAlert } = showAlert(templateError);
   const btnAlertError = message.querySelector('.error__button');
   if (btnAlertError) {
-    btnAlertError.addEventListener('click', () => {
-      removeAlert();
-    });
+    btnAlertError.addEventListener('click', () => removeAlert());
   }
 };
 
@@ -54,9 +52,7 @@ const showSuccessMessage = () => {
   const { message, removeAlert } = showAlert(templateSuccess);
   const btnAlertSuccess = message.querySelector('.success__button');
   if (btnAlertSuccess) {
-    btnAlertSuccess.addEventListener('click', () => {
-      removeAlert();
-    });
+    btnAlertSuccess.addEventListener('click', () => removeAlert());
   }
 };
 

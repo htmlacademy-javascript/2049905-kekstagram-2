@@ -1,8 +1,10 @@
 import { showBigPicture } from './fullsize-picture.js';
+import { initFilters } from './filters.js';
+
+const photosContainer = document.querySelector('.pictures');
 
 const drawThumbnails = (items) => {
   const photoTemplate = document.querySelector('#picture').content.querySelector('.picture');
-  const photosContainer = document.querySelector('.pictures');
   const photosListFragment = document.createDocumentFragment();
 
   items.forEach(({url, description, likes, comments}) => {
@@ -21,4 +23,13 @@ const drawThumbnails = (items) => {
   photosContainer.append(photosListFragment);
 };
 
-export { drawThumbnails };
+function showThumbnails(items) {
+  drawThumbnails(items);
+  initFilters(items);
+}
+
+const clearThumbnails = () => {
+  photosContainer.querySelectorAll('.picture').forEach((el) => el.remove());
+};
+
+export { drawThumbnails, showThumbnails, clearThumbnails };
