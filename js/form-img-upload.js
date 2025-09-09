@@ -4,6 +4,8 @@ import { configureSlider } from './slider.js';
 import { sendData } from './api.js';
 import { showSuccessMessage, showErrorMessage } from './notifications.js';
 
+const FILE_TYPES = ['jpg', 'jpeg', 'png'];
+
 const ScaleValue = {
   default: 100,
   max: 100,
@@ -45,9 +47,20 @@ const onBtnSmallerImgClick = () => {
   }
 };
 
+const pushImgPreview = () => {
+  const file = imgUploadInput.files[0];
+  const fileName = file.name.toLowerCase();
+  const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
+
+  if (matches) {
+    imgPreview.src = URL.createObjectURL(file);
+  }
+};
+
 const openImgUploadOverlay = () => {
   imgUploadOverlay.classList.remove('hidden');
   pageBody.classList.add('modal-open');
+  pushImgPreview();
   document.addEventListener('keydown', onDocumentEscKeydown);
 };
 
