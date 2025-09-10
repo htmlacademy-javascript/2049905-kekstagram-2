@@ -1,8 +1,10 @@
 import { isEscapeKey } from './util.js';
 import { validateImgUploadForm } from './validator.js';
-import { configureSlider } from './slider.js';
+import { configureSlider } from './effects.js';
 import { sendData } from './api.js';
 import { showSuccessMessage, showErrorMessage } from './notifications.js';
+
+const FILE_TYPES = ['jpg', 'jpeg', 'png'];
 
 const ScaleValue = {
   default: 100,
@@ -16,6 +18,7 @@ const imgUploadForm = document.querySelector('.img-upload__form');
 const imgUploadInput = document.querySelector('.img-upload__input');
 const imgUploadCloser = document.querySelector('.img-upload__cancel');
 const imgPreview = document.querySelector('.img-upload__preview img');
+const imgEffectsPreview = document.querySelectorAll('.effects__preview');
 const scaleValueInput = document.querySelector('.scale__control--value');
 const btnSmallerImg = document.querySelector('.scale__control--smaller');
 const btnBiggerImg = document.querySelector('.scale__control--bigger');
@@ -45,9 +48,25 @@ const onBtnSmallerImgClick = () => {
   }
 };
 
+const pushImgPreview = () => {
+  const file = imgUploadInput.files[0];
+  const fileName = file.name.toLowerCase();
+  const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
+
+  if (matches) {
+    const imageUrl = URL.createObjectURL(file);
+    imgPreview.src = imageUrl;
+
+    imgEffectsPreview.forEach((preview) => {
+      preview.style.backgroundImage = `url(${imageUrl})`;
+    });
+  }
+};
+
 const openImgUploadOverlay = () => {
   imgUploadOverlay.classList.remove('hidden');
   pageBody.classList.add('modal-open');
+  pushImgPreview();
   document.addEventListener('keydown', onDocumentEscKeydown);
 };
 
