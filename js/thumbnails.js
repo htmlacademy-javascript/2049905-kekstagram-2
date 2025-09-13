@@ -23,13 +23,14 @@ const drawThumbnails = (items) => {
   photosContainer.append(photosListFragment);
 };
 
-function showThumbnails(items) {
+const showThumbnails = (items) => {
   drawThumbnails(items);
   initFilters(items);
-}
+};
 
 const clearThumbnails = () => {
-  photosContainer.querySelectorAll('.picture').forEach((el) => el.remove());
+  photosContainer.querySelectorAll('.picture')
+    .forEach((item) => item.remove());
 };
 
 export { drawThumbnails, showThumbnails, clearThumbnails };

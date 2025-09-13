@@ -41,13 +41,13 @@ const EffectValue = {
   }
 };
 
-let currentEffect = 'none';
-
 const imgUploadForm = document.querySelector('.img-upload__form');
 const effectContainer = imgUploadForm.querySelector('.img-upload__effect-level');
 const effectValueInput = effectContainer.querySelector('.effect-level__value');
 const effectSlider = effectContainer.querySelector('.effect-level__slider');
 const previewPhoto = imgUploadForm.querySelector('.img-upload__preview img');
+
+let currentEffect = 'none';
 
 noUiSlider.create(effectSlider, {
   start: 100,

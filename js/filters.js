@@ -11,6 +11,7 @@ const btnFilterRandom = imgFilters.querySelector('#filter-random');
 const btnFilterDiscussed = imgFilters.querySelector('#filter-discussed');
 
 let defaultThumbnails = [];
+let currentFilter = 'btnFilterDefault';
 
 const debounceRender = debounce((thumbnails) => {
   clearThumbnails();
@@ -23,33 +24,44 @@ const changeFilter = (btnFilter) => {
   btnFilter.classList.add(BUTTON_ACTIVE);
 };
 
-const onBtnFilterDefault = () => {
-  changeFilter(btnFilterDefault);
-  debounceRender(defaultThumbnails);
+const applyFilter = (filterName, btnElement, filterFn) => {
+  if (currentFilter === filterName) {
+    return;
+  }
+
+  const thumbnails = filterFn(defaultThumbnails);
+  changeFilter(btnElement);
+  debounceRender(thumbnails);
+
+  currentFilter = filterName;
 };
 
-const onBtnFilterRandom = () => {
-  const randomThumbnails = defaultThumbnails.slice().sort(() => 0.5 - Math.random()).slice(0, RANDOM_THUMBNAILS_COUNT);
+const onBtnFilterDefaultClick = () =>
+  applyFilter('btnFilterDefault', btnFilterDefault, (thumbnails) => thumbnails);
 
-  changeFilter(btnFilterRandom);
-  debounceRender(randomThumbnails);
-};
+const onBtnFilterRandomClick = () =>
+  applyFilter('btnFilterRandom', btnFilterRandom, (thumbnails) =>
+    thumbnails
+      .slice()
+      .sort(() => 0.5 - Math.random())
+      .slice(0, RANDOM_THUMBNAILS_COUNT)
+  );
 
-const onBtnFilterDiscussed = () => {
-  const discussedThumbnails = defaultThumbnails.slice().sort((a, b) => b.comments.length - a.comments.length);
-
-  changeFilter(btnFilterDiscussed);
-  debounceRender(discussedThumbnails);
-};
+const onBtnFilterDiscussedClick = () =>
+  applyFilter('btnFilterDiscussed', btnFilterDiscussed, (thumbnails) =>
+    thumbnails
+      .slice()
+      .sort((a, b) => b.comments.length - a.comments.length)
+  );
 
 const initFilters = (items) => {
   defaultThumbnails = items.slice();
 
   imgFilters.classList.remove('img-filters--inactive');
 
-  btnFilterDefault.addEventListener('click', onBtnFilterDefault);
-  btnFilterRandom.addEventListener('click', onBtnFilterRandom);
-  btnFilterDiscussed.addEventListener('click', onBtnFilterDiscussed);
+  btnFilterDefault.addEventListener('click', onBtnFilterDefaultClick);
+  btnFilterRandom.addEventListener('click', onBtnFilterRandomClick);
+  btnFilterDiscussed.addEventListener('click', onBtnFilterDiscussedClick);
 };
 
 export { initFilters };

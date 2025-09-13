@@ -48,7 +48,7 @@ const onBtnSmallerImgClick = () => {
   }
 };
 
-const pushImgPreview = () => {
+const addImgPreview = () => {
   const file = imgUploadInput.files[0];
   const fileName = file.name.toLowerCase();
   const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
@@ -66,7 +66,7 @@ const pushImgPreview = () => {
 const openImgUploadOverlay = () => {
   imgUploadOverlay.classList.remove('hidden');
   pageBody.classList.add('modal-open');
-  pushImgPreview();
+  addImgPreview();
   document.addEventListener('keydown', onDocumentEscKeydown);
 };
 
