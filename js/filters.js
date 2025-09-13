@@ -11,7 +11,7 @@ const btnFilterRandom = imgFilters.querySelector('#filter-random');
 const btnFilterDiscussed = imgFilters.querySelector('#filter-discussed');
 
 let defaultThumbnails = [];
-let currentFilter = 'btnFilterDefault';
+let currentFilter = btnFilterDefault;
 
 const debounceRender = debounce((thumbnails) => {
   clearThumbnails();
@@ -24,23 +24,23 @@ const changeFilter = (btnFilter) => {
   btnFilter.classList.add(BUTTON_ACTIVE);
 };
 
-const applyFilter = (filterName, btnElement, filterFn) => {
-  if (currentFilter === filterName) {
+const applyFilter = (btnFilter, filterFn) => {
+  if (currentFilter === btnFilter) {
     return;
   }
 
   const thumbnails = filterFn(defaultThumbnails);
-  changeFilter(btnElement);
+  changeFilter(btnFilter);
   debounceRender(thumbnails);
 
-  currentFilter = filterName;
+  currentFilter = btnFilter;
 };
 
 const onBtnFilterDefaultClick = () =>
-  applyFilter('btnFilterDefault', btnFilterDefault, (thumbnails) => thumbnails);
+  applyFilter(btnFilterDefault, (thumbnails) => thumbnails);
 
 const onBtnFilterRandomClick = () =>
-  applyFilter('btnFilterRandom', btnFilterRandom, (thumbnails) =>
+  applyFilter(btnFilterRandom, (thumbnails) =>
     thumbnails
       .slice()
       .sort(() => 0.5 - Math.random())
@@ -48,7 +48,7 @@ const onBtnFilterRandomClick = () =>
   );
 
 const onBtnFilterDiscussedClick = () =>
-  applyFilter('btnFilterDiscussed', btnFilterDiscussed, (thumbnails) =>
+  applyFilter(btnFilterDiscussed, (thumbnails) =>
     thumbnails
       .slice()
       .sort((a, b) => b.comments.length - a.comments.length)

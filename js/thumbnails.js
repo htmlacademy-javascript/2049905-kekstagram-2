@@ -8,14 +8,15 @@ const drawThumbnails = (items) => {
   const photosListFragment = document.createDocumentFragment();
 
   items.forEach(({url, description, likes, comments}) => {
-    const photoElement = photoTemplate.cloneNode(true);
-    photoElement.querySelector('.picture__img').src = url;
-    photoElement.querySelector('.picture__img').alt = description;
-    photoElement.querySelector('.picture__comments').textContent = comments.length;
-    photoElement.querySelector('.picture__likes').textContent = likes;
-    photosListFragment.append(photoElement);
+    const photo = photoTemplate.cloneNode(true);
+    const photoImg = photo.querySelector('.picture__img');
+    photoImg.src = url;
+    photoImg.alt = description;
+    photo.querySelector('.picture__comments').textContent = comments.length;
+    photo.querySelector('.picture__likes').textContent = likes;
+    photosListFragment.append(photo);
 
-    photoElement.addEventListener('click', () => {
+    photo.addEventListener('click', () => {
       showBigPicture({url, description, likes, comments});
     });
   });

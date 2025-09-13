@@ -23,20 +23,6 @@ const closeBigPicture = () => {
   commentsLoader.removeEventListener('click', onCommentsLoaderClick);
 };
 
-function onDocumentEscKeydown(evt) {
-  if (isEscapeKey(evt)) {
-    closeBigPicture();
-  }
-}
-
-function onBigPictureCloserClick() {
-  closeBigPicture();
-}
-
-function onCommentsLoaderClick() {
-  loadMoreComments();
-}
-
 const createCommentElement = ({ avatar, name, message }) => {
   const comment = document.createElement('li');
   comment.classList.add('social__comment');
@@ -57,7 +43,7 @@ const createCommentElement = ({ avatar, name, message }) => {
   return comment;
 };
 
-function loadMoreComments() {
+const loadMoreComments = () => {
   const fragment = document.createDocumentFragment();
   const moreComments = allComments.slice(shownComments, shownComments + COMMENTS_PER_LOAD);
 
@@ -69,6 +55,20 @@ function loadMoreComments() {
   shownComments += moreComments.length;
   commentsShownCounter.textContent = shownComments;
   commentsLoader.classList.toggle('hidden', shownComments === allComments.length);
+};
+
+function onDocumentEscKeydown(evt) {
+  if (isEscapeKey(evt)) {
+    closeBigPicture();
+  }
+}
+
+function onBigPictureCloserClick() {
+  closeBigPicture();
+}
+
+function onCommentsLoaderClick() {
+  loadMoreComments();
 }
 
 const showBigPicture = ({ url, description, likes, comments }) => {
