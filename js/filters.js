@@ -51,7 +51,9 @@ const onBtnFilterDiscussedClick = () =>
   applyFilter(btnFilterDiscussed, (thumbnails) =>
     thumbnails
       .slice()
-      .sort((a, b) => b.comments.length - a.comments.length)
+      .sort((thumbnailFirst, thumbnailSecond) =>
+        thumbnailSecond.comments.length - thumbnailFirst.comments.length
+      )
   );
 
 const initFilters = (items) => {
